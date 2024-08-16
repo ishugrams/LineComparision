@@ -4,50 +4,52 @@ class LineComparision {
     public static void main(String[] args) {
         System.out.println("Welcome to LineComparision");
 
-        DisplayDemo dobj = new DisplayDemo();
-        dobj.Display();
+        // Create two Line objects
+        Line line1 = new Line();
+        Line line2 = new Line();
+
+        // Input points for both lines
+        System.out.println("Enter coordinates for the first line:");
+        line1.inputPoints();
+        System.out.println("Enter coordinates for the second line:");
+        line2.inputPoints();
+
+        // Checking equality of two lines
+        if (line1.isEqualTo(line2)) {
+            System.out.println("Both lines are equal.");
+        } else {
+            System.out.println("Lines are not equal.");
+        }
     }
 }
 
-class DisplayDemo {
-    public void Display() {
+class Line {
+    private int x1, y1, x2, y2;
+
+    // Method to input the coordinates of the line
+    public void inputPoints() {
         Scanner sc = new Scanner(System.in);
-
-        // Taking input for the first point (x1, y1)
         System.out.print("Enter x1: ");
-        int x1 = sc.nextInt();
+        x1 = sc.nextInt();
         System.out.print("Enter y1: ");
-        int y1 = sc.nextInt();
-
-        // Taking input for the second point (x2, y2)
+        y1 = sc.nextInt();
         System.out.print("Enter x2: ");
-        int x2 = sc.nextInt();
+        x2 = sc.nextInt();
         System.out.print("Enter y2: ");
-        int y2 = sc.nextInt();
+        y2 = sc.nextInt();
+    }
 
-        // Calculating the difference
+    // Method to calculate the squared length of the line
+    public int getSquaredLength() {
         int dx = x2 - x1;
         int dy = y2 - y1;
+        return dx * dx + dy * dy;
+    }
 
-        // Manually calculating (x2 - x1)^2 and (y2 - y1)^2
-        int dxSquared = dx * dx;
-        int dySquared = dy * dy;
-
-        // Adding the squares
-        int sumOfSquares = dxSquared + dySquared;
-
-        // Simple iterative approach to find the square root
-        double length = 0;
-        for (int i = 0; i * i <= sumOfSquares; i++) {
-            length = i;
-        }
-
-        // Fine-tuning the square root value using a basic increment approach
-        for (double j = length; j * j <= sumOfSquares; j += 0.01) {
-            length = j;
-        }
-
-        // Displaying the length of the line
-        System.out.println("Length of the line between points (" + x1 + ", " + y1 + ") and (" + x2 + ", " + y2 + ") is approximately: " + length);
+    // Method to check if this line is equal to another line
+    public boolean isEqualTo(Line other) {
+        int thisLengthSquared = getSquaredLength();
+        int otherLengthSquared = other.getSquaredLength();
+        return thisLengthSquared == otherLengthSquared;
     }
 }
